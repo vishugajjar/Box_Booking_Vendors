@@ -22,12 +22,12 @@ const LoginScreen = () => {
           </View>
           <View style={styles.middleView}>
             <UserTextInput
-              iconName="email-outline"
-              iconProvider={IconProvider.materialCommunityIcons}
+              iconName="mail-outline"
+              iconProvider={IconProvider.ionIcons}
               placeholder="Enter Your Email"
             />
             <UserTextInput
-              iconName="email-outline"
+              iconName="lock-outline"
               iconProvider={IconProvider.materialCommunityIcons}
               placeholder="Enter Your Password"
               secureTextEntry

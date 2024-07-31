@@ -10,6 +10,7 @@ const UserTextInput = ({
   iconProvider,
   ...textInputProps
 }: UserTextInputType & TextInputProps) => {
+  console.log('icon:', iconName, iconProvider);
   return (
     <View style={styles.container}>
       <AppIcon

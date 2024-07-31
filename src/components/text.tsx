@@ -239,7 +239,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     textAlign: 'center',
     fontFamily: 'Work Sans Bold',
-    fontWeight: 'bold',
   },
   title1BoldStyle: {
     fontSize: 28,
