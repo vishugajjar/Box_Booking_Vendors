@@ -3,7 +3,7 @@ import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import React from 'react';
 import {AppColors} from '../styles/colors';
 import {Title3ColorBold} from './text';
-import {HP} from '../utils/responsive';
+import {HP} from './responsive';
 
 interface Props {
   text: string;
