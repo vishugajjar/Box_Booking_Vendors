@@ -3,6 +3,7 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -17,16 +18,19 @@ import Spacer from '../components/spacer';
 import TimeCard from '../components/timeCard';
 import {afternoonTimeList, eveningTimeList, morningTimeList} from '../utils/data';
 import { CalloutColor800, CalloutColor800Bold, Title3ColorBold } from '../components/text';
+import FormModal from '../components/formModal';
 
 const ScheduleScreen = ({route}: ScheduleScreenType) => {
   const {item} = route.params ?? {};
   const [selectedTimeContainer, setSelectedTimeContainer] = useState<GroundDetailsType>();
   const [date, setDate] = useState<moment.Moment | Date>(moment(Date.now()));
-  const [selectedTime, setSelectedTime] = useState<number>();
+  const [selectedTime, setSelectedTime] = useState<string>();
+  const [visible, setVisible] = useState<boolean>(false);
   const datesBlacklistFunc = (todaydate: moment.Moment) => {
     var another_date = moment(todaydate).utcOffset('+05:30');
     return moment(another_date).isBefore(moment(), 'date');
   };
+  console.log("time:", selectedTime, selectedTimeContainer);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -92,7 +96,7 @@ const ScheduleScreen = ({route}: ScheduleScreenType) => {
             <View style={styles.card}>
               <View style={styles.cardText}>
                 <CalloutColor800Bold text='Size :' color={AppColors.black} />
-                <CalloutColor800 text={selectedTimeContainer.groundSize} color={AppColors.black} />
+                <CalloutColor800 text={`${selectedTimeContainer.width} x ${selectedTimeContainer.height}`} color={AppColors.black} />
               </View>
               <View style={styles.cardText}>
                 <CalloutColor800Bold text='Grass :' color={AppColors.black} />
@@ -100,32 +104,42 @@ const ScheduleScreen = ({route}: ScheduleScreenType) => {
               </View>
             </View>
             </View>
-          <View style={styles.gap}>
+          <TouchableOpacity style={styles.gap} onPress={() => {
+            setSelectedTime('Morning')
+            setVisible(true);
+          }}>
           <Title3ColorBold text='Morning :' color={AppColors.black} />
             <TimeCard
-              selectedTime={selectedTime!}
-              onPress={value => setSelectedTime(value)}
               dataItem={morningTimeList}
             />
-            </View>
-            <View style={styles.gap}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.gap}  onPress={() => {
+            setSelectedTime('Morning')
+            setVisible(true);
+          }}>
             <Title3ColorBold text='Afternoon :' color={AppColors.black} />
             <TimeCard
-              selectedTime={selectedTime!}
-              onPress={value => setSelectedTime(value)}
               dataItem={afternoonTimeList}
             />
-            </View>
-            <View style={styles.gap}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.gap}  onPress={() => {
+            setSelectedTime('Morning')
+            setVisible(true);
+          }}>
             <Title3ColorBold text='Evening :' color={AppColors.black} />
             <TimeCard
-              selectedTime={selectedTime!}
-              onPress={value => setSelectedTime(value)}
               dataItem={eveningTimeList}
             />
-            </View>
+            </TouchableOpacity>
         </View>
         ) : (null)}
+        {selectedTime ? (
+        <FormModal
+          data={item}
+          visible={visible}
+          onClose={() => setVisible(false)}
+        />
+      ) : null}
         
       </ScrollView>
     </SafeAreaView>

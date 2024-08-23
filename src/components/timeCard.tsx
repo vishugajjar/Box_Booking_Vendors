@@ -13,23 +13,18 @@ import {GreyPitch, Pitch, RedPitch} from '../assets/images';
 import {AppColors} from '../styles/colors';
 import FormModal from './formModal';
 
-const TimeCard = ({onPress, dataItem, selectedTime}: TimeCardType) => {
+const TimeCard = ({dataItem}: TimeCardType) => {
   const cardWidth = Dimensions.get('window').width / 3;
-  const [visible, setVisible] = useState<boolean>(false);
+  
   return (
     <View style={styles.card}>
       {dataItem.map((data, index) => {
         const containerImage = data.booked ? GreyPitch : data.available ? Pitch : RedPitch;
         const textColor = data.booked ? 'white' : 'black';
         return (
-          <TouchableOpacity
+          <View
             key={index}
-            disabled={data.booked || !data.available ? true : false}
-            style={{width: cardWidth, height: mobileHeight / 13}}
-            onPress={() => {
-              onPress(data.id);
-              setVisible(true);
-            }}>
+            style={{width: cardWidth, height: mobileHeight / 13}}>
             <ImageBackground
               source={containerImage}
               imageStyle={styles.imageStyle}
@@ -40,16 +35,9 @@ const TimeCard = ({onPress, dataItem, selectedTime}: TimeCardType) => {
                 </Text>
               </View>
             </ImageBackground>
-          </TouchableOpacity>
+          </View>
         );
       })}
-      {dataItem.find(i => i.id === selectedTime) ? (
-        <FormModal
-          data={dataItem.find(i => i.id === selectedTime)!}
-          visible={visible}
-          onClose={() => setVisible(false)}
-        />
-      ) : null}
     </View>
   );
 };

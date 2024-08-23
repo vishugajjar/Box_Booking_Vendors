@@ -1,14 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-
-export type GroundDetailsType = {
-  ground: string;
-  groundSize: string;
-  groundCategory: string;
-  price: number;
-  grassType: string;
-  width: string;
-  height: string
-};
+import { GroundDetailsType } from './src/utils/types';
 
 // Define the shape of the context value
 interface GroundDataContextType {

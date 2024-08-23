@@ -2,7 +2,7 @@ import { doc, DocumentData, setDoc } from "firebase/firestore";
 import firestore, {
     FirebaseFirestoreTypes,
   } from '@react-native-firebase/firestore';
-import { getFireStoreDataType, setFirestoreDataType } from "./types";
+import { getFireStoreDataType, setFirestoreDataType, updateFirestoreDataType } from "./types";
 import { db } from "./firebaseService";
 
 export enum DB_KEYS {
@@ -56,4 +56,14 @@ export enum DB_KEYS {
         payload as FirebaseFirestoreTypes.SetOptions,
       );
     }
+  };
+
+  export const updateFirestoreData = async <T>(
+    data: updateFirestoreDataType<T>,
+  ): Promise<void> => {
+    const { id, collectionName, payload } = data;
+    return await firestore()
+      .collection(collectionName)
+      .doc(id)
+      .update(payload as FirebaseFirestoreTypes.SetOptions);
   };

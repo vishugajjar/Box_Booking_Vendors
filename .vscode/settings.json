@@ -5,6 +5,8 @@
         "firestore",
         "Fontisto",
         "geolocation",
-        "Ionicons"
+        "Ionicons",
+        "timetext",
+        "todaydate"
     ]
 }

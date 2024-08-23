@@ -51,7 +51,7 @@ const HomeScreen = () => {
   useEffect(() => {
     checkLocationPermissions();
     getData();
-  }, []);
+  }, [isFocused]);
   
   return (
     <SafeAreaView style={styles.safeView}>

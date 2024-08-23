@@ -36,7 +36,7 @@ export type UserTextInputType = {
 export type FormModalType = {
   visible: boolean;
   onClose: () => void;
-  data: dayTimeListType;
+  data: FormDataType;
 };
 
 export type DataType = {
@@ -61,8 +61,6 @@ export type timeListType = {
 
 export type TimeCardType = {
   dataItem: dayTimeListType[];
-  onPress: (value: number) => void;
-  selectedTime: number;
 };
 export type dayTimeListType = {
   id: number;
@@ -106,11 +104,13 @@ export interface AmenitiesData {
 };
 
 export type GroundDetailsType = {
-  ground: string,
-  groundSize: string,
-  groundCategory: string,
-  price: number,
-  grassType: string,
+  ground: string;
+  groundSize: string;
+  groundCategory: string;
+  price: number;
+  grassType: string;
+  width: string;
+  height: string
 };
 
 export type FormDataType = {
@@ -156,4 +156,10 @@ export type TimeListType = {
     id: number;
     time: string;
     duration: string;
+  };
+
+  export type updateFirestoreDataType<T> = {
+    collectionName: DB_KEYS;
+    id: string;
+    payload: T;
   };

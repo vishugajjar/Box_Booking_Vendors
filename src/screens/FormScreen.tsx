@@ -18,7 +18,7 @@ import TextInputField from '../components/textInputField';
 import {HP, mobileHeight, mobileWidth, WP} from '../components/responsive';
 import {CalloutColor800, CalloutColor800Bold} from '../components/text';
 import {amenitiesList, grassType, timeList} from '../utils/data';
-import {AmenitiesData, Root, TimeListType} from '../utils/types';
+import {AmenitiesData, GroundDetailsType, Root, TimeListType} from '../utils/types';
 import MapView, {Marker} from 'react-native-maps';
 import {useNavigation} from '@react-navigation/native';
 import {routes} from '../utils/routes';
@@ -30,7 +30,7 @@ import {db} from '../utils/firebaseService';
 import * as ImagePicker from 'react-native-image-picker';
 import ActionModal from '../components/actionModal';
 import GroundCard from '../components/groundCard';
-import { GroundDetailsType, useGroundData } from '../../groundContext';
+import {useGroundData} from '../../groundContext';
 
 const FormScreen = () => {
   const [name, setName] = useState<string>();
@@ -53,6 +53,7 @@ const FormScreen = () => {
   const [photos, setPhotos] = useState<string[] | void[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState([]);
   const urlarray: string[] = []
 
   const addItem = (item: AmenitiesData) => {
@@ -66,6 +67,10 @@ const FormScreen = () => {
 
   const addTimeListItem = (item: TimeListType) => {
     const filterItem = selectedTimeList.filter(i => i !== item);
+    const data = {
+      time: item,
+      
+    }
     if (selectedTimeList.find(i => i === item)) {
       setSelectedTimeList(filterItem);
     } else {
@@ -118,6 +123,7 @@ const FormScreen = () => {
         amenities: selectedAmenities,
         location: location,
         photos: urlarray,
+        availableTime: selectedTimeList,
         description: description,
       };
       if (
@@ -354,10 +360,10 @@ const FormScreen = () => {
               <View style={styles.view4}>
                 {timeList.map((item, index) => {
                   return (
+                    <View key={index}>
                     <View
-                      key={index}
                       style={[styles.rowIconView, {width: mobileWidth}]}>
-                      <TouchableOpacity onPress={() => addTimeListItem(item)}>
+                      <TouchableOpacity onPress={() => {addTimeListItem(item)}}>
                         <AppIcon
                           icon={
                             selectedTimeList.find(i => i === item)
@@ -375,6 +381,7 @@ const FormScreen = () => {
                         text={`${item.time}  ${item.duration}`}
                         color={AppColors.black}
                       />
+                    </View>
                     </View>
                   );
                 })}
@@ -566,5 +573,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+  },
+  cardView: {
+    width: '100%',
+    borderWidth: 0,
+    borderColor: AppColors.primaryColor,
+    borderRadius: 10,
+    padding: WP(3),
+    gap: HP(2),
+    marginTop: HP(1),
+    backgroundColor: AppColors.primaryColorOpacity,
   },
 });

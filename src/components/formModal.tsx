@@ -10,23 +10,30 @@ import React, {useEffect, useState} from 'react';
 import {FormModalType} from '../utils/types';
 import {AppColors} from '../styles/colors';
 import {HP, WP} from './responsive';
-import {CalloutColor800, CalloutColor800Bold} from './text';
+import {CalloutColor800} from './text';
 import TextInputField from './textInputField';
 import Spacer from './spacer';
 import {availableData} from '../utils/data';
 import AppIcon, {IconProvider} from './appIcon';
 import AppButton from './appButton';
+import { DB_KEYS, getFireStoreData, updateFirestoreData } from '../utils/fireStoreHelpers';
+import { STORAGE_KEYS } from '../utils/storageHelper';
 
 const FormModal = ({visible, onClose, data}: FormModalType) => {
   const [selected, setSelected] = useState<number>(availableData[0].id);
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<number>(data.grounds[0].price);
+
+
+  // const updateData = async() => {
+  //   await updateFirestoreData({collectionName: DB_KEYS.BOXDATA, id: })
+  // }
   
-  useEffect(() => {
-    let available = data.available === true ? availableData[0].id : availableData[1].id;
-    setSelected(available)
-    let price = data.price ? data.price.toString() : value;
-    setValue(price)
-  }, [data])
+  // useEffect(() => {
+  //   let available = data.available === true ? availableData[0].id : availableData[1].id;
+  //   setSelected(available)
+  //   let price = data.price ? data.price.toString() : value;
+  //   setValue(price)
+  // }, [data])
   
   
   
@@ -46,8 +53,8 @@ const FormModal = ({visible, onClose, data}: FormModalType) => {
               <TextInputField
                 title="Price"
                 placeholder="000"
-                value={value}
-                onChangeText={value => setValue(value)}
+                value={value.toString()}
+                onChangeText={value => setValue(Number(value))}
               />
             </>
           ) : null}
