@@ -9,5 +9,4 @@ export const routes = {
     BOTTOM: 'Bottom',
     SCHEDULE: 'Schedule',
     FORM: 'Form',
-    LOCATION: 'Location',
   };

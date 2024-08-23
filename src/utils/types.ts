@@ -16,7 +16,6 @@ export type RootStackParamList = {
     item: FormDataType;
   };
   Form: undefined;
-  Location: undefined;
 };
 
 export type Root = {
