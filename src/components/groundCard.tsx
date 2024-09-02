@@ -5,46 +5,60 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
-import {HP, WP} from './responsive';
-import {CalloutColor800Bold} from './text';
+import React, {useState} from 'react';
+import {HP, mobileWidth, WP} from './responsive';
+import {CalloutColor800, CalloutColor800Bold} from './text';
 import {AppColors} from '../styles/colors';
 import AppIcon, {IconProvider} from './appIcon';
 import {Dropdown} from 'react-native-element-dropdown';
 import TextInputField from './textInputField';
-import {categoryList, grassType} from '../utils/data';
-import {GroundCardType} from '../utils/types';
-import { useGroundData } from '../../groundContext';
+import {categoryList, grassType, timeList} from '../utils/data';
+import {GroundCardType, TimeListType} from '../utils/types';
+import {useGroundData} from '../../groundContext';
 
-const GroundCard = ({
-  onGroundCount,
-  index
-}: GroundCardType) => {
+const GroundCard = ({onGroundCount, index}: GroundCardType) => {
   const [groundSizeWidth, setGroundSizeWidth] = useState<string>();
   const [groundSizeHeight, setGroundSizeHeight] = useState<string>();
   const [category, setCategory] = useState<string>();
   const [grass, setGrass] = useState<string>();
   const [isFocus, setIsFocus] = useState(false);
   const [price, setPrice] = useState<number>();
-  const { groundData, updateGround, removeGround } = useGroundData();
-  
-  
+  const [selectedTimeList, setSelectedTimeList] = useState<TimeListType[]>([]);
+  const {groundData, updateGround, removeGround} = useGroundData();
+
+  const addTimeListItem = (item: TimeListType) => {
+    const filterItem = selectedTimeList.filter(i => i !== item);
+    const data = {
+      time: item,
+    };
+    if (selectedTimeList.find(i => i === item)) {
+      setSelectedTimeList(filterItem);
+      updateGround(index, {...groundData[index], availableTime: filterItem});
+    } else {
+      setSelectedTimeList([...selectedTimeList, item]);
+      updateGround(index, {...groundData[index], availableTime: [...selectedTimeList, item]});
+    }
+    updateGround(index, {...groundData[index], availableTime: [...selectedTimeList, item]});
+  };
+
   return (
-    
     <View style={styles.view1}>
       <View style={styles.rowView}>
-        <CalloutColor800Bold text={groundData[index].ground} color={AppColors.black} />
-        {index <= 0 ? (null) : (
+        <CalloutColor800Bold
+          text={groundData[index].ground}
+          color={AppColors.black}
+        />
+        {index <= 0 ? null : (
           <TouchableOpacity
-          onPress={() => removeGround(index)}
-          style={styles.icon1}>
-          <AppIcon
-            icon="minus"
-            iconProvider={IconProvider.fontAwesome6}
-            size={18}
-            color={AppColors.black}
-          />
-        </TouchableOpacity>
+            onPress={() => removeGround(index)}
+            style={styles.icon1}>
+            <AppIcon
+              icon="minus"
+              iconProvider={IconProvider.fontAwesome6}
+              size={18}
+              color={AppColors.black}
+            />
+          </TouchableOpacity>
         )}
       </View>
       <View style={styles.gap}>
@@ -56,9 +70,10 @@ const GroundCard = ({
               placeholderTextColor={AppColors.grey}
               placeholder="Width(ft)"
               value={groundSizeWidth}
-              onChangeText={text => {setGroundSizeWidth(text);
-            
-               updateGround(index, { ...groundData[index], width: text })
+              onChangeText={text => {
+                setGroundSizeWidth(text);
+
+                updateGround(index, {...groundData[index], width: text});
               }}
             />
           </View>
@@ -71,7 +86,7 @@ const GroundCard = ({
               value={groundSizeHeight}
               onChangeText={text => {
                 setGroundSizeHeight(text);
-                updateGround(index, { ...groundData[index], height: text })
+                updateGround(index, {...groundData[index], height: text});
               }}
             />
           </View>
@@ -101,7 +116,10 @@ const GroundCard = ({
           onChange={item => {
             setCategory(item.name);
             setIsFocus(false);
-            updateGround(index, { ...groundData[index], groundCategory: item.name })
+            updateGround(index, {
+              ...groundData[index],
+              groundCategory: item.name,
+            });
           }}
         />
       </View>
@@ -112,7 +130,7 @@ const GroundCard = ({
         placeholderTextColor={AppColors.grey}
         onChangeText={text => {
           setPrice(Number(text));
-          updateGround(index, { ...groundData[index], price: Number(text) })
+          updateGround(index, {...groundData[index], price: Number(text)});
         }}
       />
       <View style={styles.gap}>
@@ -139,9 +157,42 @@ const GroundCard = ({
           onChange={item => {
             setGrass(item.name);
             setIsFocus(false);
-            updateGround(index, { ...groundData[index], grassType: item.name })
+            updateGround(index, {...groundData[index], grassType: item.name});
           }}
         />
+      </View>
+      <View style={styles.gap}>
+        <CalloutColor800Bold text="Schedule" color={AppColors.black} />
+        <View style={styles.view4}>
+          {timeList.map((item, index) => {
+            return (
+              <View key={index}>
+                <View style={[styles.rowIconView, {width: mobileWidth}]}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      addTimeListItem(item);
+                      
+                    }}>
+                    <AppIcon
+                      icon={
+                        selectedTimeList.find(i => i === item)
+                          ? 'check-square'
+                          : 'square-o'
+                      }
+                      iconProvider={IconProvider.fontAwesome}
+                      size={selectedTimeList.find(i => i === item) ? 20 : 22}
+                      color={AppColors.black}
+                    />
+                  </TouchableOpacity>
+                  <CalloutColor800
+                    text={`${item.time}  ${item.duration}`}
+                    color={AppColors.black}
+                  />
+                </View>
+              </View>
+            );
+          })}
+        </View>
       </View>
     </View>
   );
@@ -200,12 +251,12 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: 14,
     fontWeight: '400',
-    color: AppColors.black
+    color: AppColors.black,
   },
   itemText: {
     fontSize: 14,
     fontWeight: '400',
-    color: AppColors.black
+    color: AppColors.black,
   },
   itemContainer: {
     backgroundColor: AppColors.white,
@@ -223,6 +274,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: WP(1),
     paddingVertical: HP(1.5),
     backgroundColor: AppColors.white,
-    color: AppColors.black
+    color: AppColors.black,
+  },
+  view4: {
+    alignItems: 'flex-start',
+    borderWidth: 0,
+    padding: WP(3),
+    gap: HP(1),
+  },
+  rowIconView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: WP(2),
   },
 });

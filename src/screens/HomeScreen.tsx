@@ -20,7 +20,7 @@ import { FormDataType, Root } from '../utils/types';
 import { routes } from '../utils/routes';
 import { data } from '../utils/data';
 import { checkLocationPermissions } from '../utils/permission';
-import { DB_KEYS, getFireStoreData } from '../utils/fireStoreHelpers';
+import { DB_KEYS, deleteFirestoreData, getFireStoreData } from '../utils/fireStoreHelpers';
 import { getItem, STORAGE_KEYS } from '../utils/storageHelper';
 import { DocumentData } from 'firebase/firestore';
 
@@ -46,6 +46,11 @@ const HomeScreen = () => {
       })
     }); 
     setIsLoading(false); 
+  };
+
+  const removeDataFromFirestore = async(item: FormDataType) => {
+    await deleteFirestoreData({collectionName: DB_KEYS.BOXDATA, id: item.id})
+    setGroundData(groundData.filter(i => i !== item));
   }
 
   useEffect(() => {
@@ -118,7 +123,7 @@ const HomeScreen = () => {
               <>
               {groundData.map((item, index) => {
                 return (
-                  <PopularCard key={index} data={item} onpress={() => navigation.navigate(routes.SCHEDULE, {item: item})}  />
+                  <PopularCard key={index} data={item} onpress={() => navigation.navigate(routes.SCHEDULE, {item: item})} onPressRemove={() => removeDataFromFirestore(item)}  />
                 )
               })}
               </>

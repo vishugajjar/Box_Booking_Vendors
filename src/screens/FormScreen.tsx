@@ -18,7 +18,7 @@ import TextInputField from '../components/textInputField';
 import {HP, mobileHeight, mobileWidth, WP} from '../components/responsive';
 import {CalloutColor800, CalloutColor800Bold} from '../components/text';
 import {amenitiesList, grassType, timeList} from '../utils/data';
-import {AmenitiesData, GroundDetailsType, Root, TimeListType} from '../utils/types';
+import {AmenitiesData, FormDataType, GroundDetailsType, Root, TimeListType} from '../utils/types';
 import MapView, {Marker} from 'react-native-maps';
 import {useNavigation} from '@react-navigation/native';
 import {routes} from '../utils/routes';
@@ -113,18 +113,18 @@ const FormScreen = () => {
       setPhotos(urlarray);
 
     if (uid && urlarray.length === photoUri.length) {
-      const formData = {
+      const formData: FormDataType = {
+        id: dataRef.id,
         uid: uid,
-        name: name,
-        emailId: email,
-        contactNumber: number,
+        name: name!,
+        emailId: email!,
+        contactNumber: number!,
         numberOfGrounds: groundData.length,
         grounds: groundData,
         amenities: selectedAmenities,
         location: location,
         photos: urlarray,
-        availableTime: selectedTimeList,
-        description: description,
+        description: description!,
       };
       if (
         (name !== undefined &&
@@ -188,6 +188,7 @@ const FormScreen = () => {
       grassType: '',
       width: '',
       height: '',
+      availableTime: []
     };
     addGround(newGround);
   };
@@ -353,38 +354,6 @@ const FormScreen = () => {
                     })}
                   </>
                 ) : null}
-              </View>
-            </View>
-            <View style={styles.gap}>
-              <CalloutColor800Bold text="Schedule" color={AppColors.black} />
-              <View style={styles.view4}>
-                {timeList.map((item, index) => {
-                  return (
-                    <View key={index}>
-                    <View
-                      style={[styles.rowIconView, {width: mobileWidth}]}>
-                      <TouchableOpacity onPress={() => {addTimeListItem(item)}}>
-                        <AppIcon
-                          icon={
-                            selectedTimeList.find(i => i === item)
-                              ? 'check-square'
-                              : 'square-o'
-                          }
-                          iconProvider={IconProvider.fontAwesome}
-                          size={
-                            selectedTimeList.find(i => i === item) ? 20 : 22
-                          }
-                          color={AppColors.black}
-                        />
-                      </TouchableOpacity>
-                      <CalloutColor800
-                        text={`${item.time}  ${item.duration}`}
-                        color={AppColors.black}
-                      />
-                    </View>
-                    </View>
-                  );
-                })}
               </View>
             </View>
             <TextInputField

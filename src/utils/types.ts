@@ -37,6 +37,9 @@ export type FormModalType = {
   visible: boolean;
   onClose: () => void;
   data: FormDataType;
+  selectedTime: string;
+  selectedGround: GroundDetailsType;
+  index: number;
 };
 
 export type DataType = {
@@ -66,9 +69,6 @@ export type dayTimeListType = {
   id: number;
   time: string;
   booked: boolean;
-  duration: string;
-  price: number;
-  available: boolean;
 };
 
 export type TextInputFieldType = {
@@ -110,7 +110,8 @@ export type GroundDetailsType = {
   price: number;
   grassType: string;
   width: string;
-  height: string
+  height: string;
+  availableTime: TimeListType[];
 };
 
 export type FormDataType = {
@@ -123,6 +124,8 @@ export type FormDataType = {
   amenities: AmenitiesData[],
   description: string,
   photos: string[];
+  id: string;
+  location: any;
 }
 
 export type ScheduleScreenType = {
@@ -156,6 +159,9 @@ export type TimeListType = {
     id: number;
     time: string;
     duration: string;
+    price: number;
+    available: boolean;
+    timing: dayTimeListType[];
   };
 
   export type updateFirestoreDataType<T> = {
@@ -163,3 +169,8 @@ export type TimeListType = {
     id: string;
     payload: T;
   };
+
+export type deleteFirestoreDataType = Pick<
+  updateFirestoreDataType<string>,
+  'collectionName' | 'id'
+>;

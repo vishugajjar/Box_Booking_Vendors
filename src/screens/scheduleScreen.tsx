@@ -16,13 +16,13 @@ import {GroundDetailsType, ScheduleScreenType} from '../utils/types';
 import BookingCard from '../components/bookingCard';
 import Spacer from '../components/spacer';
 import TimeCard from '../components/timeCard';
-import {afternoonTimeList, eveningTimeList, morningTimeList} from '../utils/data';
 import { CalloutColor800, CalloutColor800Bold, Title3ColorBold } from '../components/text';
 import FormModal from '../components/formModal';
 
 const ScheduleScreen = ({route}: ScheduleScreenType) => {
   const {item} = route.params ?? {};
   const [selectedTimeContainer, setSelectedTimeContainer] = useState<GroundDetailsType>();
+  const [selectedGroundIndex, setSelectedGroundIndex] = useState<number>();
   const [date, setDate] = useState<moment.Moment | Date>(moment(Date.now()));
   const [selectedTime, setSelectedTime] = useState<string>();
   const [visible, setVisible] = useState<boolean>(false);
@@ -30,7 +30,6 @@ const ScheduleScreen = ({route}: ScheduleScreenType) => {
     var another_date = moment(todaydate).utcOffset('+05:30');
     return moment(another_date).isBefore(moment(), 'date');
   };
-  console.log("time:", selectedTime, selectedTimeContainer);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -79,7 +78,10 @@ const ScheduleScreen = ({route}: ScheduleScreenType) => {
             return (
               <BookingCard
                 key={index}
-                onPress={() => setSelectedTimeContainer(item)}
+                onPress={() => {
+                  setSelectedTimeContainer(item);
+                  setSelectedGroundIndex(index)
+                }}
                 data={item}
                 bgColor={containerColor}
                 textColor={textColor}
@@ -104,40 +106,36 @@ const ScheduleScreen = ({route}: ScheduleScreenType) => {
               </View>
             </View>
             </View>
-          <TouchableOpacity style={styles.gap} onPress={() => {
-            setSelectedTime('Morning')
-            setVisible(true);
-          }}>
-          <Title3ColorBold text='Morning :' color={AppColors.black} />
-            <TimeCard
-              dataItem={morningTimeList}
-            />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.gap}  onPress={() => {
-            setSelectedTime('Morning')
-            setVisible(true);
-          }}>
-            <Title3ColorBold text='Afternoon :' color={AppColors.black} />
-            <TimeCard
-              dataItem={afternoonTimeList}
-            />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.gap}  onPress={() => {
-            setSelectedTime('Morning')
-            setVisible(true);
-          }}>
-            <Title3ColorBold text='Evening :' color={AppColors.black} />
-            <TimeCard
-              dataItem={eveningTimeList}
-            />
-            </TouchableOpacity>
+            {selectedTimeContainer.availableTime.map(i => {
+              return (
+                <TouchableOpacity style={styles.gap} onPress={() => {
+                  setSelectedTime(i.time)
+                  setVisible(true);
+                }}>
+                <Title3ColorBold text={i.time} color={AppColors.black} />
+                {i.available === true ? (
+                  <TimeCard
+                  dataItem={i.timing}
+                />
+                ) : (
+                  <View style={styles.card1}>
+                    <CalloutColor800Bold text='Not Available' color={AppColors.black} />
+                  </View>
+                )}
+                  
+                  </TouchableOpacity>
+              )
+            })}
         </View>
         ) : (null)}
         {selectedTime ? (
         <FormModal
+          index={selectedGroundIndex!}
           data={item}
           visible={visible}
           onClose={() => setVisible(false)}
+          selectedTime={selectedTime}
+          selectedGround={selectedTimeContainer!}
         />
       ) : null}
         
@@ -185,5 +183,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: WP(2),
     alignItems: 'center',
-  }
+  },
+  card1: {
+    backgroundColor: AppColors.white,
+    borderRadius: 20,
+    paddingHorizontal: WP(6),
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: HP(2),
+    shadowColor: AppColors.black,
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 10,
+    borderColor: AppColors.primaryColor,
+    borderWidth: 2,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 20,
+  },
 });

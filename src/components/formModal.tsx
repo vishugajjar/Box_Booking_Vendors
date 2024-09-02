@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {FormModalType} from '../utils/types';
 import {AppColors} from '../styles/colors';
 import {HP, WP} from './responsive';
@@ -16,26 +16,28 @@ import Spacer from './spacer';
 import {availableData} from '../utils/data';
 import AppIcon, {IconProvider} from './appIcon';
 import AppButton from './appButton';
-import { DB_KEYS, getFireStoreData, updateFirestoreData } from '../utils/fireStoreHelpers';
-import { STORAGE_KEYS } from '../utils/storageHelper';
+import { DB_KEYS, updateFirestoreData } from '../utils/fireStoreHelpers';
 
-const FormModal = ({visible, onClose, data}: FormModalType) => {
+const FormModal = ({visible, onClose, data, selectedTime, selectedGround, index}: FormModalType) => {
   const [selected, setSelected] = useState<number>(availableData[0].id);
-  const [value, setValue] = useState<number>(data.grounds[0].price);
-
-
-  // const updateData = async() => {
-  //   await updateFirestoreData({collectionName: DB_KEYS.BOXDATA, id: })
-  // }
+  const [value, setValue] = useState<number>(selectedGround.price);
   
-  // useEffect(() => {
-  //   let available = data.available === true ? availableData[0].id : availableData[1].id;
-  //   setSelected(available)
-  //   let price = data.price ? data.price.toString() : value;
-  //   setValue(price)
-  // }, [data])
-  
-  
+  const updateData = async() => {
+    const updateObject = selectedGround.availableTime.map(i => {
+      if(i.time === selectedTime){
+        i.price = value;
+        i.available = selected === 1 ? true : false;
+        return i;
+      }
+      return i;
+    })
+    
+    await updateFirestoreData({collectionName: DB_KEYS.BOXDATA, id: data.id, payload: {
+      "grounds.0.availableTime": updateObject
+    }});
+    onClose();
+  }
+  console.log("ground:",  data);
   
   return (
     <Modal
@@ -89,7 +91,7 @@ const FormModal = ({visible, onClose, data}: FormModalType) => {
             text="Done"
             textColor={AppColors.black}
             style={styles.btn}
-            onPress={onClose}
+            onPress={updateData}
           />
         </View>
       </ScrollView>

@@ -3,16 +3,16 @@ import React from 'react';
 import {HP, WP} from './responsive';
 import {CalloutColor800, Caption1Color, HeadlineBoldColor} from './text';
 import AppIcon, {IconProvider} from './appIcon';
-import { AppColors } from '../styles/colors';
-import { FormDataType } from '../utils/types';
+import {AppColors} from '../styles/colors';
+import {FormDataType} from '../utils/types';
 
 type PopularCardType = {
   onpress: () => void;
   data: FormDataType;
+  onPressRemove: () => void;
 };
 
-const PopularCard = ({onpress, data}: PopularCardType) => {
-  
+const PopularCard = ({onpress, data, onPressRemove}: PopularCardType) => {
   return (
     <TouchableOpacity onPress={onpress} style={styles.conatiner}>
       <View style={styles.innerView}>
@@ -28,18 +28,31 @@ const PopularCard = ({onpress, data}: PopularCardType) => {
               text="4.9 (55 reviews)"
               color={AppColors.darkerGrey}
             />
-            <CalloutColor800 text={`${'\u20b9'}${data.grounds[0].price}`} color={AppColors.black} />
+            <CalloutColor800
+              text={`${'\u20b9'}${data.grounds[0].price}`}
+              color={AppColors.black}
+            />
           </View>
         </View>
-        <View style={styles.starview}>
-          {Array.from({length: 5}, (_, i) => (
+        <View style={styles.iconView}>
+          <TouchableOpacity onPress={onPressRemove}>
             <AppIcon
-              icon={i < 4 ? 'star' : 'star-outline'}
-              iconProvider={IconProvider.ionIcons}
-              size={14}
-              color={i < 4 ? AppColors.yellow : 'black'}
+              icon="trash"
+              iconProvider={IconProvider.fontAwesome5}
+              size={18}
+              color={AppColors.primaryColor}
             />
-          ))}
+          </TouchableOpacity>
+          <View style={styles.starview}>
+            {Array.from({length: 5}, (_, i) => (
+              <AppIcon
+                icon={i < 4 ? 'star' : 'star-outline'}
+                iconProvider={IconProvider.ionIcons}
+                size={14}
+                color={i < 4 ? AppColors.yellow : 'black'}
+              />
+            ))}
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -63,7 +76,7 @@ const styles = StyleSheet.create({
   innerView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     flex: 1,
   },
   img: {
@@ -87,5 +100,10 @@ const styles = StyleSheet.create({
     gap: HP(0.1),
     marginLeft: -WP(6),
     marginBottom: HP(1),
+  },
+  iconView: {
+    alignItems: 'center',
+    height: '100%',
+    justifyContent: 'space-between',
   },
 });

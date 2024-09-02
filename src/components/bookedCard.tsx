@@ -1,4 +1,4 @@
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {HP, WP} from './responsive';
 import AppIcon, {IconProvider} from './appIcon';
@@ -6,6 +6,12 @@ import {CalloutColor800Bold, SubHeadingColor} from './text';
 import { AppColors } from '../styles/colors';
 
 const BookedCard = () => {
+
+  const makePhoneCall = (phoneNumber: string) => {
+    let phoneNumberUrl = `tel:${phoneNumber}`;
+    Linking.openURL(phoneNumberUrl).catch(err => console.error('Error occurred', err));
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.view}>
@@ -53,7 +59,7 @@ const BookedCard = () => {
         <SubHeadingColor text="Paid" color={AppColors.white} />
         </View>
       </View>
-    <TouchableOpacity style={styles.callButton}>
+    <TouchableOpacity style={styles.callButton} onPress={() => makePhoneCall('90000 80000')}>
       <AppIcon icon='call-outline' iconProvider={IconProvider.ionIcons} size={18} color={AppColors.sky} />
       <CalloutColor800Bold text='90000 80000' color={AppColors.sky}  />
     </TouchableOpacity>

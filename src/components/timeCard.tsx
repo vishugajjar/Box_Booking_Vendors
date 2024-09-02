@@ -3,23 +3,21 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {TimeCardType} from '../utils/types';
 import {HP, mobileHeight, WP} from './responsive';
-import {GreyPitch, Pitch, RedPitch} from '../assets/images';
+import {GreyPitch, Pitch} from '../assets/images';
 import {AppColors} from '../styles/colors';
-import FormModal from './formModal';
 
 const TimeCard = ({dataItem}: TimeCardType) => {
   const cardWidth = Dimensions.get('window').width / 3;
-  
+
   return (
     <View style={styles.card}>
       {dataItem.map((data, index) => {
-        const containerImage = data.booked ? GreyPitch : data.available ? Pitch : RedPitch;
+        const containerImage = data.booked ? GreyPitch : Pitch;
         const textColor = data.booked ? 'white' : 'black';
         return (
           <View
@@ -31,7 +29,7 @@ const TimeCard = ({dataItem}: TimeCardType) => {
               style={styles.flex1}>
               <View style={[styles.timeContainer]}>
                 <Text style={[styles.timetext, {color: textColor}]}>
-                  {data.available === true ? data.time : 'Not Available'}
+                  {data.time}
                 </Text>
               </View>
             </ImageBackground>

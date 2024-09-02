@@ -1,159 +1,6 @@
 import { IconProvider } from "../components/appIcon";
 import { AppColors } from "../styles/colors";
-import { Action, AmenitiesData, categoryListType, dayTimeListType, TimeListType } from "./types";
-
-export const eveningTimeList: dayTimeListType[] = [
-    {
-      id: 12,
-      time: '06:00pm To 07:00pm',
-      booked: false,
-      duration: 'Evening',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 13,
-      time: '07:00pm To 08:00pm',
-      booked: false,
-      duration: 'Evening',
-      price: 900,
-      available: true,
-    },
-    {
-      id: 14,
-      time: '08:00pm To 09:00pm',
-      booked: false,
-      duration: 'Evening',
-      price: 900,
-      available: true,
-    },
-    {
-      id: 15,
-      time: '09:00pm To 10:00pm',
-      booked: true,
-      duration: 'Evening',
-      price: 900,
-      available: true,
-    },
-    {
-      id: 16,
-      time: '10:00pm To 11:00pm',
-      booked: true,
-      duration: 'Evening',
-      price: 900,
-      available: true,
-    },
-    {
-      id: 17,
-      time: '11:00pm To 12:00pm',
-      booked: false,
-      duration: 'Evening',
-      price: 900,
-      available: true,
-    },
-    {
-      id: 18,
-      time: '12:00am To 01:00am',
-      booked: false,
-      duration: 'Evening',
-      price: 900,
-      available: true,
-    },
-  ];
-
-  export const morningTimeList: dayTimeListType[] = [
-    {
-      id: 1,
-      time: '07:00am To 08:00am',
-      booked: false,
-      duration: 'Morning',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 2,
-      time: '08:00am To 09:00am',
-      booked: false,
-      duration: 'Morning',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 3,
-      time: '09:00am To 10:00am',
-      booked: false,
-      duration: 'Morning',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 4,
-      time: '10:00am To 11:00am',
-      booked: true,
-      duration: 'Morning',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 5,
-      time: '11:00am To 12:00pm',
-      booked: false,
-      duration: 'Morning',
-      price: 600,
-      available: true,
-    },
-  ];
-
-  export const afternoonTimeList: dayTimeListType[] = [
-    {
-      id: 6,
-      time: '12:00pm To 01:00pm',
-      booked: false,
-      duration: 'Afternoon',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 7,
-      time: '01:00pm To 02:00pm',
-      booked: false,
-      duration: 'Afternoon',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 8,
-      time: '02:00pm To 03:00pm',
-      booked: false,
-      duration: 'Afternoon',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 9,
-      time: '03:00pm To 04:00pm',
-      booked: false,
-      duration: 'Afternoon',
-      price: 600,
-      available: false,
-    },
-    {
-      id: 10,
-      time: '04:00pm To 05:00pm',
-      booked: true,
-      duration: 'Afternoon',
-      price: 600,
-      available: true,
-    },
-    {
-      id: 11,
-      time: '05:00pm To 06:00pm',
-      booked: true,
-      duration: 'Afternoon',
-      price: 600,
-      available: true,
-    },
-  ];
+import { Action, AmenitiesData, categoryListType, TimeListType } from "./types";
 
 export const availableData = [
   {
@@ -231,7 +78,7 @@ export const categoryList: categoryListType[] = [
 export const grassType: categoryListType[] = [
   {
     id: 1,
-    name: 'Original',
+    name: 'Natural',
   },
   {
     id: 2,
@@ -319,16 +166,118 @@ export const timeList: TimeListType[] = [
   {
     id: 1,
     time: 'Morning',
-    duration: '07:00AM To 12:00PM'
+    duration: '07:00AM To 12:00PM',
+    price: 0,
+    available: true,
+    timing: [
+      {
+        id: 1,
+        time: '07:00am To 08:00am',
+        booked: false,
+      },
+      {
+        id: 2,
+        time: '08:00am To 09:00am',
+        booked: false,
+      },
+      {
+        id: 3,
+        time: '09:00am To 10:00am',
+        booked: false,
+      },
+      {
+        id: 4,
+        time: '10:00am To 11:00am',
+        booked: true,
+      },
+      {
+        id: 5,
+        time: '11:00am To 12:00pm',
+        booked: false,
+      },
+    ]
   },
   {
-    id: 1,
+    id: 2,
     time: 'Afternoon',
-    duration: '12:00PM To 06:00PM'
+    duration: '12:00PM To 06:00PM',
+    price: 0,
+    available: true,
+    timing: [
+      {
+        id: 6,
+        time: '12:00pm To 01:00pm',
+        booked: false,
+      },
+      {
+        id: 7,
+        time: '01:00pm To 02:00pm',
+        booked: false,
+      },
+      {
+        id: 8,
+        time: '02:00pm To 03:00pm',
+        booked: false,
+      },
+      {
+        id: 9,
+        time: '03:00pm To 04:00pm',
+        booked: false,
+      },
+      {
+        id: 10,
+        time: '04:00pm To 05:00pm',
+        booked: true,
+      },
+      {
+        id: 11,
+        time: '05:00pm To 06:00pm',
+        booked: true,
+      },
+    ]
   },
   {
-    id: 1,
+    id: 3,
     time: 'Evening',
-    duration: '06:00PM To 01:00AM'
+    duration: '06:00PM To 01:00AM',
+    price: 0,
+    available: true,
+    timing: [
+      {
+        id: 12,
+        time: '06:00pm To 07:00pm',
+        booked: false,
+      },
+      {
+        id: 13,
+        time: '07:00pm To 08:00pm',
+        booked: false,
+      },
+      {
+        id: 14,
+        time: '08:00pm To 09:00pm',
+        booked: false,
+      },
+      {
+        id: 15,
+        time: '09:00pm To 10:00pm',
+        booked: true,
+      },
+      {
+        id: 16,
+        time: '10:00pm To 11:00pm',
+        booked: true,
+      },
+      {
+        id: 17,
+        time: '11:00pm To 12:00pm',
+        booked: false,
+      },
+      {
+        id: 18,
+        time: '12:00am To 01:00am',
+        booked: false,
+      },
+    ]
   },
 ]

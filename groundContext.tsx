@@ -25,6 +25,7 @@ export const GroundDataProvider: React.FC<{ children: ReactNode }> = ({ children
     grassType: '',
     width: '',
     height: '',
+    availableTime: []
   };
 
   useEffect(() => {
