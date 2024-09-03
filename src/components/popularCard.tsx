@@ -29,7 +29,7 @@ const PopularCard = ({onpress, data, onPressRemove}: PopularCardType) => {
               color={AppColors.darkerGrey}
             />
             <CalloutColor800
-              text={`${'\u20b9'}${data.grounds[0].price}`}
+              text={`${'\u20b9'}${data.grounds[0].price}/hr`}
               color={AppColors.black}
             />
           </View>

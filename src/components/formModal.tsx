@@ -23,21 +23,25 @@ const FormModal = ({visible, onClose, data, selectedTime, selectedGround, index}
   const [value, setValue] = useState<number>(selectedGround.price);
   
   const updateData = async() => {
-    const updateObject = selectedGround.availableTime.map(i => {
-      if(i.time === selectedTime){
-        i.price = value;
-        i.available = selected === 1 ? true : false;
-        return i;
+    const updateObject = data.grounds.map(item => {
+      if(item.ground === selectedGround.ground){
+        item.availableTime.map(i => {
+          if(i.time === selectedTime){
+                i.price = value;
+                i.available = selected === 1 ? true : false;
+                return i;
+              }
+              return i;
+        })
       }
-      return i;
+      return item;
     })
     
     await updateFirestoreData({collectionName: DB_KEYS.BOXDATA, id: data.id, payload: {
-      "grounds.0.availableTime": updateObject
+      grounds: updateObject
     }});
     onClose();
   }
-  console.log("ground:",  data);
   
   return (
     <Modal
