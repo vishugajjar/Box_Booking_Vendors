@@ -52,6 +52,7 @@ const FormScreen = () => {
   const [photoUri, setPhotoUri] = useState<string[]>([]);
   const [photos, setPhotos] = useState<string[] | void[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
+  const [address, setAddress] = useState<string>();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const [expanded, setExpanded] = useState([]);
   const urlarray: string[] = []
@@ -123,6 +124,7 @@ const FormScreen = () => {
         grounds: groundData,
         amenities: selectedAmenities,
         location: location,
+        address: address!,
         photos: urlarray,
         description: description!,
       };
@@ -134,6 +136,7 @@ const FormScreen = () => {
           grassType !== undefined &&
           amenitiesList.length !== 0 &&
           location !== undefined &&
+          address !== undefined &&
           description !== undefined)
       ) {
         await setFirestoreData({
@@ -315,6 +318,14 @@ const FormScreen = () => {
                 </MapView>
               </View>
             </View>
+            <TextInputField
+              title="Address"
+              placeholder="Enter your address"
+              numberOfLines={6}
+              value={address}
+              onChangeText={text => setAddress(text)}
+              placeholderTextColor={AppColors.grey}
+            />
             <View style={styles.gap}>
               <View style={styles.rowView}>
                 <CalloutColor800Bold

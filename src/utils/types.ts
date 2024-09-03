@@ -123,6 +123,7 @@ export type FormDataType = {
   grounds: GroundDetailsType[]
   amenities: AmenitiesData[],
   description: string,
+  address: string,
   photos: string[];
   id: string;
   location: any;
