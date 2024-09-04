@@ -69,6 +69,7 @@ export type dayTimeListType = {
   id: number;
   time: string;
   booked: boolean;
+  timeId: number;
 };
 
 export type TextInputFieldType = {
