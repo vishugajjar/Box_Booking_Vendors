@@ -2,7 +2,6 @@ import {
   Modal,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -11,7 +10,6 @@ import {FormModalType} from '../utils/types';
 import {AppColors} from '../styles/colors';
 import {HP, WP} from './responsive';
 import {CalloutColor800} from './text';
-import TextInputField from './textInputField';
 import Spacer from './spacer';
 import {availableData} from '../utils/data';
 import AppIcon, {IconProvider} from './appIcon';
@@ -20,14 +18,11 @@ import { DB_KEYS, updateFirestoreData } from '../utils/fireStoreHelpers';
 
 const FormModal = ({visible, onClose, data, selectedTime, selectedGround, index}: FormModalType) => {
   const [selected, setSelected] = useState<number>(availableData[0].id);
-  const [value, setValue] = useState<number>(selectedGround.price);
-  
   const updateData = async() => {
     const updateObject = data.grounds.map(item => {
       if(item.ground === selectedGround.ground){
         item.availableTime.map(i => {
           if(i.time === selectedTime){
-                i.price = value;
                 i.available = selected === 1 ? true : false;
                 return i;
               }
@@ -54,16 +49,6 @@ const FormModal = ({visible, onClose, data, selectedTime, selectedGround, index}
         style={styles.view}
         contentContainerStyle={styles.scrollContainer}>
         <View style={styles.flex1}>
-          {data ? (
-            <>
-              <TextInputField
-                title="Price"
-                placeholder="000"
-                value={value.toString()}
-                onChangeText={value => setValue(Number(value))}
-              />
-            </>
-          ) : null}
           <Spacer height={HP(3)} />
           <View style={styles.view1}>
             <View>
