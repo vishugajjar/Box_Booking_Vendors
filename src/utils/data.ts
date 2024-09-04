@@ -171,26 +171,31 @@ export const timeList: TimeListType[] = [
     available: true,
     timing: [
       {
+        timeId: 1,
         id: 1,
         time: '07:00am To 08:00am',
         booked: false,
       },
       {
+        timeId: 1,
         id: 2,
         time: '08:00am To 09:00am',
         booked: false,
       },
       {
+        timeId: 1,
         id: 3,
         time: '09:00am To 10:00am',
         booked: false,
       },
       {
+        timeId: 1,
         id: 4,
         time: '10:00am To 11:00am',
-        booked: true,
+        booked: false,
       },
       {
+        timeId: 1,
         id: 5,
         time: '11:00am To 12:00pm',
         booked: false,
@@ -205,34 +210,40 @@ export const timeList: TimeListType[] = [
     available: true,
     timing: [
       {
+        timeId: 2,
         id: 6,
         time: '12:00pm To 01:00pm',
         booked: false,
       },
       {
+        timeId: 2,
         id: 7,
         time: '01:00pm To 02:00pm',
         booked: false,
       },
       {
+        timeId: 2,
         id: 8,
         time: '02:00pm To 03:00pm',
         booked: false,
       },
       {
+        timeId: 2,
         id: 9,
         time: '03:00pm To 04:00pm',
         booked: false,
       },
       {
+        timeId: 2,
         id: 10,
         time: '04:00pm To 05:00pm',
-        booked: true,
+        booked: false,
       },
       {
+        timeId: 2,
         id: 11,
         time: '05:00pm To 06:00pm',
-        booked: true,
+        booked: false,
       },
     ]
   },
@@ -244,36 +255,43 @@ export const timeList: TimeListType[] = [
     available: true,
     timing: [
       {
+        timeId: 3,
         id: 12,
         time: '06:00pm To 07:00pm',
         booked: false,
       },
       {
+        timeId: 3,
         id: 13,
         time: '07:00pm To 08:00pm',
         booked: false,
       },
       {
+        timeId: 3,
         id: 14,
         time: '08:00pm To 09:00pm',
         booked: false,
       },
       {
+        timeId: 3,
         id: 15,
         time: '09:00pm To 10:00pm',
-        booked: true,
+        booked: false,
       },
       {
+        timeId: 3,
         id: 16,
         time: '10:00pm To 11:00pm',
-        booked: true,
+        booked: false,
       },
       {
+        timeId: 3,
         id: 17,
         time: '11:00pm To 12:00pm',
         booked: false,
       },
       {
+        timeId: 3,
         id: 18,
         time: '12:00am To 01:00am',
         booked: false,

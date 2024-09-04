@@ -97,7 +97,6 @@ const FormScreen = () => {
   const setFormData = async () => {
     const uid = await getItem(STORAGE_KEYS.TOKEN);
     const dataRef = doc(collection(db, 'cartData'));
-
     
     if (response) {
       setPhotos([]);
@@ -143,6 +142,9 @@ const FormScreen = () => {
           collectionName: DB_KEYS.BOXDATA,
           id: dataRef.id,
           payload: formData,
+        }).catch(error => {
+          console.log("Error:", error);
+          
         });
       } else {
         Alert.alert('Please Enter All the Details');
